@@ -1,4 +1,4 @@
-const pokemonCount = 151;
+const pokemonCount = 1017;
 var pokedex = {}; 
 
 window.onload = async function () {
@@ -14,9 +14,18 @@ window.onload = async function () {
 
     document.getElementById("pokemon-description").innerText = pokedex[1]["desc"];
 
+    // Display the first Pokémon's name in the pokemon-name div
+    displayPokemonName(1);
+
     console.log(pokedex);
 }
 
+function displayPokemonName(id) {
+    const pokemonNameDiv = document.getElementById("pokemon-name");
+    if (pokedex[id]) {
+        pokemonNameDiv.innerText = pokedex[id]["name"].toUpperCase();
+    }
+}
 async function getPokemon(num) {
     try {
         let url = `https://pokeapi.co/api/v2/pokemon/${num}`;
@@ -63,6 +72,7 @@ async function getPokemon(num) {
     }
 }
 
+
 function updatePokemon() {
     document.getElementById("pokemon-img").src = pokedex[this.id]["img"];
 
@@ -88,12 +98,22 @@ function updatePokemon() {
 
     // Update description
     document.getElementById("pokemon-description").innerText = pokedex[this.id]["desc"];
-    
+
+    // Display the selected Pokémon's name in the pokemon-name div
+    displayPokemonName(this.id);
 }
+
 
 async function getTypeData(typeName) {
     const url = `https://pokeapi.co/api/v2/type/${typeName}`;
     const res = await fetch(url);
     const typeData = await res.json();
     return typeData;
+}
+
+function displayPokemonName(id) {
+    const pokemonNameDiv = document.getElementById("pokemon-name");
+    if (pokedex[id]) {
+        pokemonNameDiv.innerText = pokedex[id]["name"].toUpperCase();
+    }
 }

@@ -1,4 +1,4 @@
-const pokemonCount = 439;
+const pokemonCount = 386;
 var pokedex = {}; 
 
 window.onload = async function () {
@@ -37,7 +37,7 @@ async function getPokemon(num) {
         let pokemonType = pokemon["types"];
         let pokemonImg = pokemon["sprites"]["front_shiny"];
 
-        // Fetch abilities details in Spanish
+        // Fetch habilidades
         const abilitiesPromises = pokemon.abilities.map(async (ability) => {
             const abilityResponse = await fetch(ability.ability.url);
             const abilityData = await abilityResponse.json();
@@ -48,11 +48,11 @@ async function getPokemon(num) {
 
         let pokemonDesc = '';
 
-        // Fetching the description from the species endpoint
+        // Fetching la descripcion
         res = await fetch(pokemon["species"]["url"]);
         let pokemonDescData = await res.json();
 
-        // Find the Spanish flavor text entry
+        // Texto espanol
         const spanishEntry = pokemonDescData.flavor_text_entries.find(entry => entry.language.name === "es");
         if (spanishEntry) {
             pokemonDesc = spanishEntry.flavor_text;
@@ -76,13 +76,13 @@ async function getPokemon(num) {
 function updatePokemon() {
     document.getElementById("pokemon-img").src = pokedex[this.id]["img"];
 
-    // Clear previous type
+    // Limpiar tipo anterior
     let typesDiv = document.getElementById("pokemon-types");
     while (typesDiv.firstChild) {
         typesDiv.firstChild.remove();
     }
 
-    // Update types
+    // Actualizar tipos
     let types = pokedex[this.id]["types"];
     for (let i = 0; i < types.length; i++) {
         let type = document.createElement("span");
@@ -92,14 +92,14 @@ function updatePokemon() {
         typesDiv.append(type);
     }
 
-    // Update abilities
+    // Actualizar Habilidad
     let abilitiesDiv = document.getElementById("pokemon-ability");
     abilitiesDiv.innerText = `Habilidades: ${pokedex[this.id]["abilities"].join(', ')}`;
 
-    // Update description
+    // Actualizar descripcion
     document.getElementById("pokemon-description").innerText = pokedex[this.id]["desc"];
 
-    // Display the selected Pokémon's name in the pokemon-name div
+    // nombre
     displayPokemonName(this.id);
 }
 
